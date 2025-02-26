@@ -75,10 +75,11 @@ const app = () => {
     setLoading(true);
     
     try {
-      const newData = Array.from({ length: 20 }, (_, i) => ({
+      const newData = Array.from({ length: 10 }, (_, i) => ({
         id: i + 35 + (page - 1) * 20,
-        title: `Item ${i + 1 + (page - 1) * 20}`,
-        thumbnail: 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png'
+        title: `Dummy Item ${i + 1 + (page - 1) * 20}`,
+        thumbnail: 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png',
+        description:"Dummy item description"
       }));
       setData(prevData => [...prevData, ...newData]);
       setPage(prevPage => prevPage + 1);
