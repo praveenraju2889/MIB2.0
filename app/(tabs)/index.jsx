@@ -60,9 +60,13 @@ const app = () => {
       //const response = await fetch('https://reactnative.dev/movies.json');
       //const response = await fetch('https://jsonplaceholder.typicode.com/photos');
       const response = await fetch('https://dummyjson.com/products');
+
+      //const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+      
       
       const json = await response.json();
       setData(json.products);
+      //setData(json);
     } catch (error) {
       console.error(error);
     } finally {
@@ -70,6 +74,9 @@ const app = () => {
     }
   };
 
+  const renderFooter = () => (
+    isLoading ? <ActivityIndicator size="large" color="blue" /> : null
+  );
   const fetchData = useCallback(async () => {
     if (isLoading) return;
     setLoading(true);
@@ -80,7 +87,9 @@ const app = () => {
         title: `Dummy Item ${i + 1 + (page - 1) * 20}`,
         thumbnail: 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png',
         description:"Dummy item description"
+        
       }));
+      //const newData = data.slice((page - 1) * 4, page * 4);
       setData(prevData => [...prevData, ...newData]);
       setPage(prevPage => prevPage + 1);
     } catch (error) {
@@ -111,6 +120,7 @@ const app = () => {
               keyExtractor={item => item.id}
               onEndReached={fetchData}
               //onEndReachedThreshold={0.5}
+              ListFooterComponent={renderFooter}
             />
           </SafeAreaView>
         </SafeAreaProvider>
