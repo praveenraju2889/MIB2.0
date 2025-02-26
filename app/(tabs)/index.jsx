@@ -130,8 +130,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     borderBlockColor: 'red',
-    height:"80%"
+    height:"80%",
     //marginVertical: 70,
+    //shadowColor: 'black',
   },
   containerBG:{
     flex: 1,
@@ -140,6 +141,8 @@ const styles = StyleSheet.create({
    //marginBlockStart:70,
     width: '100%',
     height: '80%',
+    backgroundColor: '#d1d0cd',
+    //shadowColor: 'red',
   },
   image: {
     width: "100%",
@@ -152,9 +155,9 @@ const styles = StyleSheet.create({
   },
   text: {
     //marginTop:70,
-    //marginVertical: 30,
-    marginBlockStart:20,
-    marginHorizontal: 30,
+    marginVertical: 10,
+    marginBlockStart:5,
+    marginHorizontal: 10,
     color: 'rgba(243, 72, 103, 0.47)',
     fontSize: 42,
     fontWeight: 'bold',
@@ -163,17 +166,19 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    backgroundColor: '#a9abaa',
+    backgroundColor: '#ffffff',
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
     //flexDirection: 'row'
+    borderRadius:15,
+    //shadowColor: 'black',
   },
   title: {
     fontFamily:"SpaceMono-Regular",
     //fontStyle:'normal',
     fontSize: 25,
-    marginVertical: 0,
+    marginVertical: 5,
     //marginHorizontal: 16,
     textAlign: 'left',
 
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     fontFamily:"SpaceMono-Regular",
     //fontStyle:'normal',
     fontSize: 10,
-    marginVertical: 0,
+    marginVertical: 5,
     //marginHorizontal: 16,
     textAlign: 'left',
 
