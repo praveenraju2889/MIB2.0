@@ -95,7 +95,7 @@ const app = () => {
   return (
     <View style={styles.container}>
      
-        <Text style={styles.text}>MIB 2.0</Text>
+        <Text style={styles.text}>Scrolling List</Text>
         {/* <Button
           title="Learn More"
           color="#841584"
