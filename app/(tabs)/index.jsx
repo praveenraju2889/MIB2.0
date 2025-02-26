@@ -1,6 +1,7 @@
-import { View, FlatList, Text, StyleSheet, ActivityIndicator,ImageBackground, Button, Image } from 'react-native'
+import { View, FlatList, Text, StyleSheet, ActivityIndicator,ImageBackground, Button, Image ,TouchableOpacity,Alert} from 'react-native'
 import imgMIB from "@/assets/images/cart_w.png"
 //import font from "@/assets/fonts/SpaceMono-Regular.ttf"
+
 
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -39,9 +40,16 @@ import React , {useEffect, useState,useCallback} from 'react'
 //     <Text style={styles.title}>{title}</Text>
 //   </View>
 // );
+const handleImagePress = (item) => {
+  Alert.alert('Added To Cart', `${item.title}`);
+};
+
 const renderItem = ({ item }) => (
   <View style={styles.item}>
-    <Image source={imgMIB} style={styles.imageMenu}/>
+    <TouchableOpacity onPress={() => handleImagePress(item)}>
+    <Image source={imgMIB} style={styles.imageMenu} />
+    </TouchableOpacity>
+    
     <Text style={styles.title}>{item.title}</Text>
     <Image source={ {uri:item.thumbnail} } style={styles.image1} />
     <Text style={styles.price}>AED {item.price}</Text>
@@ -57,6 +65,7 @@ const app = () => {
   //const [loading] = useState(false);
   const [page, setPage] = useState(1);
 
+   
   const getProducts = async () => {
     try {
       //const response = await fetch('https://reactnative.dev/movies.json');
@@ -221,14 +230,16 @@ const styles = StyleSheet.create({
     //fontStyle:'normal',
     fontSize: 10,
     marginVertical: 5,
+    backgroundColor:'grey',
     //marginHorizontal: 16,
     textAlign: 'left',
 
   },
   price: {
     fontFamily:"SpaceMono-Regular",
+    color:'green',
     fontWeight:'bold',
-    fontSize: 12,
+    fontSize: 15,
     marginVertical: 10,
     //marginHorizontal: 16,
     textAlign: 'left',
