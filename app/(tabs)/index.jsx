@@ -52,6 +52,7 @@ const renderItem = ({ item }) => (
 const app = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [resData, setResData] = useState([]);
   //const [loading] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -66,6 +67,7 @@ const app = () => {
       
       const json = await response.json();
       setData(json.products);
+      //setResData(json.products);
       //setData(json);
     } catch (error) {
       console.error(error);
@@ -77,6 +79,20 @@ const app = () => {
   const renderFooter = () => (
     isLoading ? <ActivityIndicator size="large" color="blue" /> : null
   );
+  const fetchDataDynamic = useCallback(async () => {
+    if (loading) return;
+    setLoading(true);
+    
+    try {
+      const newData = resData.slice((page - 1) * 4, page * 4);
+      setData(prevData => [...prevData, ...newData]);
+      setPage(prevPage => prevPage + 1);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [isLoading, page]);
   const fetchData = useCallback(async () => {
     if (isLoading) return;
     setLoading(true);
@@ -100,6 +116,7 @@ const app = () => {
   }, [isLoading, page]);
   useEffect(() => {
     getMovies();
+    fetchDataDynamic();
   }, []);
   return (
     <View style={styles.container}>
