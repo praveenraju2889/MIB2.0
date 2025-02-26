@@ -1,5 +1,5 @@
 import { View, FlatList, Text, StyleSheet, ActivityIndicator,ImageBackground, Button, Image } from 'react-native'
-import imgMIB from "@/assets/images/Work.png"
+import imgMIB from "@/assets/images/cart_w.png"
 //import font from "@/assets/fonts/SpaceMono-Regular.ttf"
 
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
@@ -41,9 +41,10 @@ import React , {useEffect, useState,useCallback} from 'react'
 // );
 const renderItem = ({ item }) => (
   <View style={styles.item}>
-    
-    <Image source={ {uri:item.thumbnail} } style={styles.image1} />
+    <Image source={imgMIB} style={styles.imageMenu}/>
     <Text style={styles.title}>{item.title}</Text>
+    <Image source={ {uri:item.thumbnail} } style={styles.image1} />
+    <Text style={styles.price}>AED {item.price}</Text>
     <Text style={styles.description}>{item.description}</Text>
   </View>
 );
@@ -56,7 +57,7 @@ const app = () => {
   //const [loading] = useState(false);
   const [page, setPage] = useState(1);
 
-  const getMovies = async () => {
+  const getProducts = async () => {
     try {
       //const response = await fetch('https://reactnative.dev/movies.json');
       //const response = await fetch('https://jsonplaceholder.typicode.com/photos');
@@ -66,8 +67,11 @@ const app = () => {
       
       
       const json = await response.json();
-      setData(json.products);
-      //setResData(json.products);
+      const arrayData = json.products;
+      //setData(json.products);
+      console.log("getProducts");
+      setResData(json.products);
+      //fetchDataDynamic();
       //setData(json);
     } catch (error) {
       console.error(error);
@@ -79,34 +83,35 @@ const app = () => {
   const renderFooter = () => (
     isLoading ? <ActivityIndicator size="large" color="blue" /> : null
   );
-  const fetchDataDynamic = useCallback(async () => {
-    if (loading) return;
-    setLoading(true);
+  // const fetchDataDynamic = useCallback(async () => {
+  //   if (loading) return;
+  //   setLoading(true);
     
-    try {
-      const newData = resData.slice((page - 1) * 4, page * 4);
-      setData(prevData => [...prevData, ...newData]);
-      setPage(prevPage => prevPage + 1);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [isLoading, page]);
+  //   try {
+  //     const newData = resData.slice((page - 1) * 4, page * 4);
+  //     setData(prevData => [...prevData, ...newData]);
+  //     setPage(prevPage => prevPage + 1);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [isLoading, page]);
   const fetchData = useCallback(async () => {
     if (isLoading) return;
     setLoading(true);
     
     try {
-      const newData = Array.from({ length: 10 }, (_, i) => ({
-        id: i + 35 + (page - 1) * 20,
-        title: `Dummy Item ${i + 1 + (page - 1) * 20}`,
-        thumbnail: 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png',
-        description:"Dummy item description"
+      // const newData = Array.from({ length: 10 }, (_, i) => ({
+      //   id: i + 35 + (page - 1) * 20,
+      //   title: `Dummy Item ${i + 1 + (page - 1) * 20}`,
+      //   thumbnail: 'https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png',
+      //   description:"Dummy item description"
         
-      }));
-      //const newData = data.slice((page - 1) * 4, page * 4);
-      setData(prevData => [...prevData, ...newData]);
+      // }));
+      console.log("fetchData");
+      const newData1 = resData.slice((page - 1) * 4, page * 4);
+      setData(prevData => [...prevData, ...newData1]);
       setPage(prevPage => prevPage + 1);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -115,15 +120,16 @@ const app = () => {
     }
   }, [isLoading, page]);
   useEffect(() => {
-    getMovies();
-    fetchDataDynamic();
+    getProducts();
+    //fetchData();
+    
   }, []);
   return (
     <View style={styles.container}>
      
         <Text style={styles.text}>Scrolling List</Text>
-        {/* <Button
-          title="Learn More"
+        {/* <Buttonr
+          title="Learn More"r
           color="#841584"
           backgroundColor="#ffffff"
           accessibilityLabel="Learn more about this purple button"
@@ -219,10 +225,26 @@ const styles = StyleSheet.create({
     textAlign: 'left',
 
   },
+  price: {
+    fontFamily:"SpaceMono-Regular",
+    fontWeight:'bold',
+    fontSize: 12,
+    marginVertical: 10,
+    //marginHorizontal: 16,
+    textAlign: 'left',
+
+  },
   image1: {
     width: 200,
     height: 200,
     borderRadius: 5,
+  },
+  imageMenu: {
+    width: 24,
+    height: 24,
+    marginLeft:'auto',
+    alignContent:"flex-end",
+    backgroundColor:'white'
   }
 
 })
