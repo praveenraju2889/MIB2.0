@@ -3,8 +3,30 @@ import { View, Button, StyleSheet, TextInput } from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
+import { useTranslation } from 'react-i18next';
+import {StringConstants} from '@/app/i18n/string_constants';
+import { I18nManager } from "react-native";
+
+
+
+
 const Login = ({ navigation }) => {
 
+    const { t ,i18n} = useTranslation();
+
+    const changeLanguage = async (language) => {
+        try {
+          await i18n.changeLanguage(language);
+         
+        //I18nManager.allowRTL(true);
+          
+        I18nManager.forceRTL(language === 'ar');
+
+          console.log(language)
+        } catch (error) {
+          console.error('Error changing language:', error);
+        }
+      };
     const onClickItem = () => {
         //Alert.alert('Item Selected', `${item.title}`);
         //navigate('ItemDetails', { item });
@@ -17,12 +39,12 @@ const Login = ({ navigation }) => {
     return (
         <View>
             <View style={styles.container}>
-                <TextInput style={styles.textBox} placeholder="Username"></TextInput>
-                <TextInput style={styles.textBox} placeholder="Password"></TextInput>
+                <TextInput style={styles.textBox} placeholder={t('emailAddress')}></TextInput>
+                <TextInput style={styles.textBox} placeholder={t('password')}></TextInput>
             </View>
             <View style={styles.buttonBG}>
                 <Button
-                    title="Login"
+                    title={t('login')}
                     onPress={onClickItem}
                     color={"white"}
                     Login />
@@ -30,12 +52,14 @@ const Login = ({ navigation }) => {
             <View style={styles.flxd}>
             <View style={styles.buttonBG}>
                 <Button
+                onPress={() => changeLanguage('en')}
                     title="English"
                     color={"white"}
                     Login />
             </View>
             <View style={styles.buttonBG}>
                 <Button
+                onPress={() => changeLanguage('ar')}
                     title="Arabic"
                     color={"white"}
                     Login />
@@ -49,12 +73,15 @@ const Login = ({ navigation }) => {
 
 
 export default Login;
+
+
 const styles = StyleSheet.create({
 
 
     flxd:{
         flexDirection:"row",
-        marginBlockEnd:100
+        marginBlockEnd:100,
+        position:'sticky'
     },
 
     container:{
@@ -73,9 +100,10 @@ const styles = StyleSheet.create({
         height: 60,
         // width:"50%",
         justifyContent: 'center',
-        alignContent: 'center',
+        alignContent: '',
         borderRadius: 5,
         marginHorizontal: 30,
         marginVertical: 5,
+        
     }
 })

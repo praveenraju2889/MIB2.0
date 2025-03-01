@@ -7,8 +7,7 @@ import ItemDetails from './ItemDetails';
 import InfiniteScrollApp from './InfiniteScrollApp';
 import Login from './Login';
 
-
-
+import '@/app/i18n/i18next'
 
 
 const app = () => {
