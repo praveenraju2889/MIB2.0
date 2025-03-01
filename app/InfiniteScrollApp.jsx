@@ -33,13 +33,23 @@ const InfiniteScrollApp = ({ navigation }) => {
             //const response = await fetch('https://jsonplaceholder.typicode.com/posts');
 
 
+            if (!response.ok) {               
+               throw new Error(`HTTP Error! Status: ${response.status}`);               
+            }
+
             const json = await response.json();
-            const arrayData = json.products;
-            //setData(json.products);
-            console.log("getProducts");
-            setResData(json.products);
-            //fetchDataDynamic();
-            //setData(json);
+            if (!data) {
+                throw new Error('Empty Response');
+            } else {
+                const arrayData = json.products;
+                //setData(json.products);
+                console.log("getProducts");
+                setResData(json.products);
+                //fetchDataDynamic();
+                //setData(json);
+            }
+
+
         } catch (error) {
             console.error(error);
         } finally {
@@ -70,7 +80,7 @@ const InfiniteScrollApp = ({ navigation }) => {
                 </View>
                 <View style={{ flex: 2 }}>
                     {/* console.log({item.id}); */}
-                    <Text style={item.price < 100 ? styles.price : styles.price }>AED {item.price}</Text>
+                    <Text style={item.price < 100 ? styles.price : styles.price}>AED {item.price}</Text>
                     <Text style={styles.description}>{item.description}</Text>
                     <Link href="/explore">test</Link>
                 </View>
