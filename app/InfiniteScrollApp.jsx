@@ -10,7 +10,7 @@ import ItemDetails from './ItemDetails';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import React, { useEffect, useState, useCallback } from 'react'
-const InfiniteScrollApp = ({ navigation }) => {
+const InfiniteScrollApp = ({ navigation,theme }) => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -70,7 +70,7 @@ const InfiniteScrollApp = ({ navigation }) => {
     };
     const renderItem = ({ item }) => (
         <TouchableOpacity onPress={() => onClickItem(item)}>
-            <View style={styles.item}>
+            <View style={[styles.item,{backgroundColor:theme.background}]}>
                 <TouchableOpacity onPress={() => handleImagePress(item)}>
                     <Image source={imgMIB} style={styles.imageMenu} />
                 </TouchableOpacity>

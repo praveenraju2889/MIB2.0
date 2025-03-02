@@ -3,6 +3,7 @@ import { NavigationContainer, NavigationIndependentTree } from '@react-navigatio
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import React ,{useState} from 'react';
+import { AuthContextProvider } from './AuthContext';
 
 import ItemDetails from './ItemDetails';
 import InfiniteScrollApp from './InfiniteScrollApp';
@@ -11,13 +12,13 @@ import Login from './Login';
 import '@/app/i18n/i18next'
 
 const lightTheme = {
-  background: '#fabebe',
+  background: '#f2edee',
   text: '#000000',
   buttonBG:'red'
 };
 
 const darkTheme = {
-  background: '#c4fabe',
+  background: '#b5e8c3',
   text: '#ffffff',
   buttonBG:'green',
 };
@@ -31,6 +32,7 @@ const app = () => {
   };
   
   return (
+   <AuthContextProvider>
     <NavigationIndependentTree>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login" > 
@@ -44,6 +46,8 @@ const app = () => {
         </Stack.Navigator>
       </NavigationContainer>
     </NavigationIndependentTree>
+    </AuthContextProvider>
+   
   )
 
 
