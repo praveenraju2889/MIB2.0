@@ -10,7 +10,7 @@ import { I18nManager } from "react-native";
 
 
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation ,theme,toggleTheme}) => {
 
     const { t ,i18n} = useTranslation();
 
@@ -37,12 +37,12 @@ const Login = ({ navigation }) => {
 
     };
     return (
-        <View>
+        <View style= {{backgroundColor:theme.background,height:"100%"}}>
             <View style={styles.container}>
                 <TextInput style={styles.textBox} placeholder={t('emailAddress')}></TextInput>
                 <TextInput style={styles.textBox} placeholder={t('password')}></TextInput>
             </View>
-            <View style={styles.buttonBG}>
+            <View style={[styles.buttonBG, { backgroundColor: theme.buttonBG }]}>
                 <Button
                     title={t('login')}
                     onPress={onClickItem}
@@ -50,22 +50,26 @@ const Login = ({ navigation }) => {
                     Login />
             </View>
             <View style={styles.flxd}>
-            <View style={styles.buttonBG}>
+            <View style={[styles.buttonBG, { backgroundColor: theme.buttonBG }]}>
                 <Button
                 onPress={() => changeLanguage('en')}
                     title="English"
                     color={"white"}
                     Login />
             </View>
-            <View style={styles.buttonBG}>
+            <View style={[styles.buttonBG, { backgroundColor: theme.buttonBG }]}>
                 <Button
                 onPress={() => changeLanguage('ar')}
                     title="Arabic"
                     color={"white"}
                     Login />
             </View>
-
+            
             </View>
+            <View>
+            <Button title="Toggle Theme" onPress={toggleTheme} />
+            </View>
+            
         </View>
     )
 
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
 
     flxd:{
         flexDirection:"row",
-        marginBlockEnd:100,
+        marginBlockEnd:90,
         position:'sticky'
     },
 
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
         marginBlockStart:"50%"
     },
     buttonBG: {
-        backgroundColor: 'red',
+       // backgroundColor: 'red',
         marginHorizontal: 60,
         marginTop: 30,
         borderRadius: 8
