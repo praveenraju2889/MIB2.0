@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Button, StyleSheet, TextInput } from "react-native";
+import { Text,View, Button, StyleSheet, TextInput,TouchableOpacity } from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons'; // For icons
+
 const Stack = createNativeStackNavigator();
 
 import { useTranslation } from 'react-i18next';
@@ -24,9 +26,15 @@ const Login = ({ navigation, theme, toggleTheme }) => {
     const [error, setError] = useState('')
     const { user, logIn } = UserAuth();
 
+    const [darkMode, setDarkMode] = useState(false);
+
+   // toggleTheme = () => setDarkMode(!darkMode);
+
     const changeLanguage = async (language) => {
         try {
-            await i18n.changeLanguage(language);
+            
+            await i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar');
+            
             if (language === 'ar') {
                 I18nManager.allowRTL(true);
                 //I18nManager
@@ -76,6 +84,20 @@ const Login = ({ navigation, theme, toggleTheme }) => {
     };
     return (
         <View style={{ backgroundColor: theme.background, height: "100%" }}>
+            {/* Header Buttons */}
+      <View style={styles.header}>
+        {/* Language Switch (Left Corner) */}
+        <TouchableOpacity style={styles.langButton} onPress={() => changeLanguage()}>
+          <Ionicons name="globe-outline" size={24} color={darkMode ? '#fff' : '#333'} />
+          
+          <Text style={[styles.buttonText]}>{i18n.language === 'ar' ? 'EN' : 'AR' }</Text>
+        </TouchableOpacity>
+
+        {/* Theme Switch (Right Corner) */}
+        <TouchableOpacity style={styles.themeButton} onPress={toggleTheme}>
+          <Ionicons name={true ? 'moon' : 'sunny'} size={24} color={darkMode ? '#fff' : '#333'} />
+        </TouchableOpacity>
+      </View>
             <View style={styles.container}>
                 <TextInput style={styles.textBox}
                     placeholder={t('emailAddress')}
@@ -91,7 +113,7 @@ const Login = ({ navigation, theme, toggleTheme }) => {
                     color={"white"}
                     Login />
             </View>
-            <View style={styles.flxd}>
+            {/* <View style={styles.flxd}>
                 <View style={[styles.buttonBG, { backgroundColor: theme.buttonBG }]}>
                     <Button
                         onPress={() => changeLanguage('en')}
@@ -107,10 +129,10 @@ const Login = ({ navigation, theme, toggleTheme }) => {
                         Login />
                 </View>
 
-            </View>
-            <View>
+            </View> */}
+            {/* <View>
                 <Button title="Toggle Theme" onPress={toggleTheme} />
-            </View>
+            </View> */}
 
         </View>
     )
@@ -139,7 +161,17 @@ const styles = StyleSheet.create({
         marginTop: 30,
         borderRadius: 8
     },
+    langButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+      },
+      buttonText: {
+        fontSize: 16,
+        color: '#333',
+      },
     textBox: {
+        flexDirection:'row-reverse',
         padding: 10,
         backgroundColor: 'white',
         borderColor: 'white',
@@ -151,5 +183,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 30,
         marginVertical: 5,
 
-    }
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        right: 20,
+      },
 })
