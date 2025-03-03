@@ -60,8 +60,8 @@ const Login = ({ navigation, theme, toggleTheme }) => {
         //navigate('ItemDetails', { item });
         //return <itemDetails route={{ params: { item } }} />
         //return <ItemDetails route={{ params: { item: item } }} />;
-        navigation.navigate('InfiniteScrollApp');
-        //handleSubmit();
+        //navigation.navigate('InfiniteScrollApp');
+        handleSubmit();
 
 
     };
@@ -79,6 +79,7 @@ const Login = ({ navigation, theme, toggleTheme }) => {
         } catch (error) {
             console.log(error);
             setError(error.message)
+            alert(error.message);
         }
     };
     //color={darkMode ? '#fff' : '#333'}
@@ -109,7 +110,7 @@ const Login = ({ navigation, theme, toggleTheme }) => {
             <View style={[styles.buttonBG, { backgroundColor: theme.buttonBG }]}>
                 <Button
                     title={t('login')}
-                    onPress={onClickItem}
+                    onPress={handleSubmit}
                     color={"white"}
                     Login />
             </View>
