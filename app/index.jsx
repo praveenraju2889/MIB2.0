@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import React ,{useState} from 'react';
 import { AuthContextProvider } from './AuthContext';
+import RNRestart from "react-native-restart";
 
 import ItemDetails from './ItemDetails';
 import InfiniteScrollApp from './InfiniteScrollApp';

@@ -10,6 +10,8 @@ import { StringConstants } from '@/app/i18n/string_constants';
 import { I18nManager } from "react-native";
 import { UserAuth } from "./AuthContext";
 import RNRestart from 'react-native-restart';
+import { Restart } from 'react-native-restart'; // This package restarts the app
+
 //import RNRestart from 'react-native-restart'
 
 import { Updates } from 'expo';
@@ -28,30 +30,27 @@ const Login = ({ navigation, theme, toggleTheme }) => {
 
     const [darkMode, setDarkMode] = useState(false);
 
-   // toggleTheme = () => setDarkMode(!darkMode);
+   const toggleTheme1 = () => {
+    toggleTheme()
+    setDarkMode(!darkMode);
+   }
 
     const changeLanguage = async (language) => {
         try {
             
-            await i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar');
-            
-            if (language === 'ar') {
-                I18nManager.allowRTL(true);
-                //I18nManager
-                console.log(I18nManager.isRTL);
-            } else {
-                I18nManager.allowRTL(false);
-            }
+            i18n
+            .changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
+            .then(() => {
+              I18nManager.allowRTL(i18n.language === 'ar')
+              I18nManager.forceRTL(i18n.language === 'ar');
+              //Restart();
+              //rUpdates.reloadAsync();
 
 
-            // I18nManager.
-            I18nManager.forceRTL(language === 'ar');
-            //Updates.reload();
-            //reloadAppAsync()
-
-
-            console.log(I18nManager.isRTL);
-            console.log(language)
+            })
+            .catch(err => {
+              console.log('something went wrong while applying RTL',{err});
+            });
         } catch (error) {
             console.error('Error changing language:', error);
         }
@@ -82,20 +81,21 @@ const Login = ({ navigation, theme, toggleTheme }) => {
             setError(error.message)
         }
     };
+    //color={darkMode ? '#fff' : '#333'}
     return (
         <View style={{ backgroundColor: theme.background, height: "100%" }}>
             {/* Header Buttons */}
       <View style={styles.header}>
         {/* Language Switch (Left Corner) */}
         <TouchableOpacity style={styles.langButton} onPress={() => changeLanguage()}>
-          <Ionicons name="globe-outline" size={24} color={darkMode ? '#fff' : '#333'} />
+          <Ionicons name="globe-outline" size={24}  />
           
           <Text style={[styles.buttonText]}>{i18n.language === 'ar' ? 'EN' : 'AR' }</Text>
         </TouchableOpacity>
 
         {/* Theme Switch (Right Corner) */}
-        <TouchableOpacity style={styles.themeButton} onPress={toggleTheme}>
-          <Ionicons name={true ? 'moon' : 'sunny'} size={24} color={darkMode ? '#fff' : '#333'} />
+        <TouchableOpacity style={styles.themeButton} onPress={toggleTheme1}>
+          <Ionicons name={darkMode ? 'moon' : 'sunny'} size={24}  />
         </TouchableOpacity>
       </View>
             <View style={styles.container}>
