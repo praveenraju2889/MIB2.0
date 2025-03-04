@@ -1,5 +1,6 @@
 {
     "login": "Login",
     "emailAddress": "Email addres",
-    "password": "Password"
+    "password": "Password",
+    "addToCart":"Add to Cart"
 }

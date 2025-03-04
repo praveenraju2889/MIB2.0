@@ -103,9 +103,9 @@ const Login = ({ navigation, theme, toggleTheme }) => {
                 <TextInput style={styles.textBox}
                     placeholder={t('emailAddress')}
                     onChangeText={newText => setEmail(newText)}
-                ></TextInput>
+                >Test@test.com</TextInput>
                 <TextInput secureTextEntry={true} style={styles.textBox} placeholder={t('password')}
-                    onChangeText={newText => setPassword(newText)}></TextInput>
+                    onChangeText={newText => setPassword(newText)}>qwerty</TextInput>
             </View>
             <View style={[styles.buttonBG, { backgroundColor: theme.buttonBG }]}>
                 <Button

@@ -1,13 +1,18 @@
 import { View, FlatList, Text, StyleSheet, ActivityIndicator, ImageBackground, Button, Image, TouchableOpacity, Alert } from 'react-native'
 import imgMIB from "@/assets/images/cart_w.png"
+import { Ionicons } from '@expo/vector-icons'; // For icons
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
+import {AsyncStorage} from 'react-native';
+
 
 import { Link } from "expo-router"
 import ItemDetails from './ItemDetails';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { StarRatingDisplay } from 'react-native-star-rating-widget';
+
 
 import React, { useEffect, useState, useCallback } from 'react'
 const InfiniteScrollApp = ({ navigation,theme }) => {
@@ -17,6 +22,7 @@ const InfiniteScrollApp = ({ navigation,theme }) => {
     const [resData, setResData] = useState([]);
     //const [loading] = useState(false);
     const [page, setPage] = useState(1);
+    
 
 
     useEffect(() => {
@@ -56,8 +62,14 @@ const InfiniteScrollApp = ({ navigation,theme }) => {
             setLoading(false);
         }
     };
-    const handleImagePress = (item) => {
-        Alert.alert('Added To Cart', `${item.title}`);
+    const handleImagePress = async(item) => {
+        
+        try {
+            Alert.alert('Added To Cart', `${item.title}`);
+            
+          } catch (error) {
+            // Error saving data
+          }
     };
     const onClickItem = (item) => {
         //Alert.alert('Item Selected', `${item.title}`);
@@ -73,6 +85,7 @@ const InfiniteScrollApp = ({ navigation,theme }) => {
             <View style={[styles.item,{backgroundColor:theme.background}]}>
                 <TouchableOpacity onPress={() => handleImagePress(item)}>
                     <Image source={imgMIB} style={styles.imageMenu} />
+                    {/* <Ionicons name="globe-outline" style={styles.imageMenu} size={24}  /> */}
                 </TouchableOpacity>
                 <View style={{ flex: 1 }}>
                     <Text style={styles.title}>{item.title}</Text>
@@ -80,6 +93,7 @@ const InfiniteScrollApp = ({ navigation,theme }) => {
                 </View>
                 <View style={{ flex: 2 }}>
                     {/* console.log({item.id}); */}
+                    <StarRatingDisplay rating={item.rating}/>
                     <Text style={item.price < 100 ? styles.price : styles.price}>AED {item.price}</Text>
                     <Text style={styles.description}>{item.description}</Text>
                     <Link href="/explore">test</Link>
